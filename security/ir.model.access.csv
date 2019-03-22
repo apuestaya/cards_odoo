@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_fact_online_fact_online,fact_online.fact_online,model_fact_online_fact_online,,1,0,0,0
