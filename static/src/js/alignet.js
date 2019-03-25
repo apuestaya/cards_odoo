@@ -5,7 +5,7 @@ odoo.define('module.Alignet', function (require)
     var rpc = require('web.rpc');
 
     $(document).ready(function()
-    {
+    {                       
         if($("#payment_method").length>0)
         {
             $("#o_payment_form_pay").hide();
@@ -29,13 +29,37 @@ odoo.define('module.Alignet', function (require)
             event.preventDefault();
             var partner_id = $(".o_payment_form").attr("data-partner-id");
             var acquirer_id = $('input[name="pm_id"]:checked').attr("data-acquirer-id");
-            
-                rpc.query({
+            var data = {"params": {partner_id:partner_id,acquirer_id:acquirer_id}}
+            $.ajax(
+                {
+                    type: "POST",
+                    url:'/alignet/get_sale_order',            
+                    data:JSON.stringify(data),            
+                    dataType: 'json',    
+                    contentType: "application/json",        
+                    async: false,  
+                    success: function (response)            
+                    {            
+                        response = response.result;
+                        if(response.acquirer=="Alignet")                   
+                        {
+                         initFormAlignet(response);
+                         displayFormproperly();   
+                        }
+                        else
+                        {
+                              $("#o_payment_form_pay").click();
+                        }
+                    }            
+                });
+
+               /* rpc.query({
                     model:'sale.order',
                     method:'get_sale_order',
                     args:[{partner_id:partner_id,acquirer_id:acquirer_id}],
-                }).then(function (result) 
-                    {    
+                }).then(function (result) s
+                    { 
+                        alert("in")   
                         if(result.acquirer=="Alignet")                   
                         {
                          initFormAlignet(result);
@@ -46,7 +70,7 @@ odoo.define('module.Alignet', function (require)
                             $("#o_payment_form_pay").click();
                         }
                         
-                    });
+                    });*/
         });
 
         $(document).on("click",".hideFormproperly",function(event)
@@ -57,47 +81,64 @@ odoo.define('module.Alignet', function (require)
         
     });
       
-    function initFormAlignet(data)
+    function initFormAlignet(dataOrder)
     {
         PF.Init.execute(
             {
                 data: 
                 {
                         operation:  {
-                                        operationNumber: data.order_name,
-                                        amount: (data.amount),
+                                        operationNumber: dataOrder.order_name,
+                                        amount: (dataOrder.amount),
                                         currency: {
-                                        code: data.currency_code,
-                                        symbol: data.currency_symbol+"."
+                                        code: dataOrder.currency_code,
+                                        symbol: dataOrder.currency_symbol+"."
                                     },
-                        productDescription: 'Pago pedido '+ data.order_name
+                        productDescription: 'Pago pedido '+ dataOrder.order_name
                         },
                         customer:   {
-                                        name: data.name,
-                                        lastname: data.name,
-                                        email: data.email,
-                                        address: data.address,
-                                        zip: data.zip,
-                                        city: data.city,
-                                        state: data.state,
-                                        country: data.country_name,
-                                        phone: data.phone
+                                        name: dataOrder.name,
+                                        lastname: dataOrder.name,
+                                        email: dataOrder.email,
+                                        address: dataOrder.address,
+                                        zip: dataOrder.zip,
+                                        city: dataOrder.city,
+                                        state: dataOrder.state,
+                                        country: dataOrder.country_name,
+                                        phone: dataOrder.phone
                                     },
-                        signature: data.signature
+                        signature: dataOrder.signature
                 },
                 listeners: {
                             afterPay: function(response) 
                                 {
+                                    console.log(response)
                                     if(response.messageCode=="00")
                                     {
-                                        rpc.query({
+                                        var dataParams = {"params": {order_name:dataOrder.order_name_odoo,confirmation_date:dataOrder.date_order,order_id:dataOrder.order_id,acquirer_name:dataOrder.acquirer,"status":"paid"}}
+                                        $.ajax(
+                                            {
+                                                type: "POST",
+                                                url:'/alignet/update_order_status',            
+                                                data:JSON.stringify(dataParams),            
+                                                dataType: 'json',    
+                                                contentType: "application/json",        
+                                                async: false,  
+                                                success: function (response)            
+                                                {     
+                                                    alert("update_order_status")       
+                                                   /// $("#o_payment_form_pay").click(); 
+                                                }            
+                                            });
+                                            
+                                        /*rpc.query({
                                             model:'sale.order',
                                             method:'update_order_status',
                                             args:[{order_name:data.order_name_odoo,confirmation_date:data.date_order,order_id:data.order_id,acquirer_name:data.acquirer,"status":"paid"}],
                                         }).then(function (result) 
                                             {
                                                 $("#o_payment_form_pay").click(); 
-                                            });
+                                            });*/
                                         
                                     }
                                     else
@@ -122,7 +163,7 @@ odoo.define('module.Alignet', function (require)
                                     'XgELOTI4Qmp/uk6+IDW08OPgiXSoak139Y91dzc+mQwBx/eTqSZhJ7EPSc2KckS/\n'+
                                     'xtV/0grIk64kHI3wTQIDAQAB\n'+
                                     '-----END PUBLIC KEY-----',
-                                    locale: data.language,
+                                    locale: dataOrder.language,
                                     identifier: '9919',
                                     brands: ['VISA','MSCD','AMEX','DINC'],
                                     responseType: 'extended'
