@@ -126,8 +126,8 @@ odoo.define('module.Alignet', function (require)
                                                 async: false,  
                                                 success: function (response)            
                                                 {     
-                                                    alert("update_order_status")       
-                                                   /// $("#o_payment_form_pay").click(); 
+                                                    //alert("update_order_status")       
+                                                    $("#o_payment_form_pay").click(); 
                                                 }            
                                             });
                                             
