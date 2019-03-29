@@ -4,7 +4,7 @@
             <xpath expr="." position="inside">
                 <script type="text/javascript" src="/cards_odoo/static/src/js/jquery.js"></script>
                 <script type="text/javascript" src="/cards_odoo/static/src/js/alignet.js"></script>
-                <script type="text/javascript" id="PaymeFormScriptStarter" src="https://vpayment.verifika.com/VPOS2/js/PF/PF.js"></script>
+                <script type="text/javascript" id="PaymeFormScriptStarter" src="https://integracion.alignetsac.com/VPOS2/js/PF/PF.js"></script>
             </xpath>
         </template>
     </data>
