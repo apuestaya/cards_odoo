@@ -158,10 +158,10 @@ odoo.define('module.Alignet', function (require)
                             settings: 
                                 {
                                     key:'-----BEGIN PUBLIC KEY-----\n'+
-                                    'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCmF2r4muyz40noeOBpEl6ESMy+\n'+
-                                    '/VVamWrPR4yq+q51fIHLn7TZ5lbMO++YmcMIKbHxpc9NJ+kE+PcisUdEJ1OGJ57E\n'+
-                                    'XgELOTI4Qmp/uk6+IDW08OPgiXSoak139Y91dzc+mQwBx/eTqSZhJ7EPSc2KckS/\n'+
-                                    'xtV/0grIk64kHI3wTQIDAQAB\n'+
+                                    'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC1yrmib8PShirgFjIBtSpU5N1Y\n'+
+                                    'YrOCYxp9hxs325DySSj8Ol3IKqZlDMTtu64wFAGUQWr2rXi4Jg09kzeE3BlLff2K\n'+
+                                    'hFdQOQINnhRv3bj3lySMTEN5abk7YdNJE1051NOFW0WrgTKr4X6n5kTworSydhCk\n'+
+                                    'ADYLEoTk6YR3dOQJ2QIDAQAB\n'+
                                     '-----END PUBLIC KEY-----',
                                     locale: dataOrder.language,
                                     identifier: '9919',
