@@ -164,7 +164,7 @@ odoo.define('module.Alignet', function (require)
                                     'ADYLEoTk6YR3dOQJ2QIDAQAB\n'+
                                     '-----END PUBLIC KEY-----',
                                     locale: dataOrder.language,
-                                    identifier: '9919',
+                                    identifier: '11057',
                                     brands: ['VISA','MSCD','AMEX','DINC'],
                                     responseType: 'extended'
                                 },
