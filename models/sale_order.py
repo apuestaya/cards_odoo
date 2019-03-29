@@ -10,7 +10,7 @@ class SaleOrder(models.Model):
     acquirer_name = fields.Text(name="acquirer_name", string="acquirer_name", default='')
     @api.model
     def get_sale_order(self, params): 
-        signatureKey = "tNRvzbeSeZegCCJXSFA?632676272275"
+        signatureKey = "xTQRaWzmLySxcVP!36645347"
                        
         query = "select name from payment_acquirer where id = "+str(params['acquirer_id'])+" limit 1"
         request.cr.execute(query)    
